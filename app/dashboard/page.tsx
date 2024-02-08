@@ -34,7 +34,7 @@ const Dashboard = async () => {
   });
 
   return (
-    <div className="items-start grid gap-y-8">
+    <div className=" grid gap-y-8">
       <div className="flex items-center justify-between px-2">
         <div className="grid gap-2">
           <h1 className="text-3xl md:text-4xl">Your Notes</h1>{" "}
@@ -60,11 +60,11 @@ const Dashboard = async () => {
           </Button>
         </div>
       ) : (
-        <div className="flex flex-col gap-4">
+        <div className="grid grid-cols-1 w-full lg:grid-cols-2 gap-5">
           {notes.map((note) => (
             <Card
               key={note.id}
-              className="flex items-center justify-between p-4"
+              className="flex items-center w-full justify-between p-4"
             >
               <div className="">
                 <h2 className="font-semibold text-xl text-primary">
@@ -75,6 +75,7 @@ const Dashboard = async () => {
                     dateStyle: "full",
                   }).format(new Date(note.createdAt))}
                 </p>
+                <p className="mt-5 text-muted-foreground">{note.description}</p>
               </div>
               <div className="flex gap-x-4">
                 <Button variant={"outline"} asChild>
@@ -83,7 +84,7 @@ const Dashboard = async () => {
                   </Link>
                 </Button>
                 <form action={deleteNote}>
-                  <input name="id" value={note.id} hidden />
+                  <input name="id" defaultValue={note.id} hidden />
                   <SubmitButton className="w-fit bg-rose-500">
                     <Trash className="w-4 h-4" />
                   </SubmitButton>
