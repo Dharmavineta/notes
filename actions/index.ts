@@ -120,7 +120,9 @@ export const createNote = async (data: FormData) => {
   return redirect("/dashboard");
 };
 
-export const deleteNote = async () => {
+export const deleteNote = async (data: FormData) => {
+  const id = data.get("id") as string;
+
   const { getUser } = getKindeServerSession();
   const loginuser = await getUser();
   if (!loginuser) {
@@ -132,4 +134,12 @@ export const deleteNote = async () => {
   if (!user) {
     return { error: "No user found" };
   }
+
+  await prismaDB.note.delete({
+    where: {
+      id,
+    },
+  });
+  revalidatePath("/dashboard");
+  return redirect("/dashboard");
 };

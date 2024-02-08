@@ -83,6 +83,7 @@ const Dashboard = async () => {
                   </Link>
                 </Button>
                 <form action={deleteNote}>
+                  <input name="id" value={note.id} hidden />
                   <SubmitButton className="w-fit bg-rose-500">
                     <Trash className="w-4 h-4" />
                   </SubmitButton>
