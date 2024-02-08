@@ -120,30 +120,6 @@ export const createNote = async (data: FormData) => {
   return redirect("/dashboard");
 };
 
-export const editNote = async (data: FormData) => {
-  const { getUser } = getKindeServerSession();
-  const title = data.get("title") as string;
-  const description = data.get("description") as string;
-
-  if (!title || !description) {
-    return { error: "No title and description" };
-  }
-  const loginuser = await getUser();
-  if (!loginuser) {
-    return { error: "No user found" };
-  }
-
-  const user = await getUserData(loginuser?.id);
-
-  if (!user) {
-    return { error: "No user found" };
-  }
-
-  const updateNote = await prismaDB.note.update({
-    where: {},
-  });
-};
-
 export const deleteNote = async () => {
   const { getUser } = getKindeServerSession();
   const loginuser = await getUser();

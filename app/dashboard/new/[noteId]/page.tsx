@@ -1,4 +1,4 @@
-import { deleteNote, editNote } from "@/actions";
+import { deleteNote } from "@/actions";
 import SubmitButton from "@/components/common/SubmitButton";
 import { Button } from "@/components/ui/button";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
@@ -51,6 +51,26 @@ const NotePage: FC<props> = async ({ params }) => {
   if (!note) {
     return redirect("/dashboard");
   }
+
+  const editNote = async (data: FormData) => {
+    "use server";
+
+    const title = data.get("title") as string;
+    const description = data.get("description") as string;
+    if (!title || !description) {
+      return { error: "Title and des required" };
+    }
+    const updatedNote = await prismaDB.note.update({
+      where: {
+        id: note.id,
+      },
+      data: {
+        title,
+        description,
+      },
+    });
+    return redirect("/dashboard");
+  };
 
   return (
     <div>
